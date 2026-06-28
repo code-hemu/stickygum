@@ -1,0 +1,50 @@
+{
+  "name": "stickygum",
+  "version": "0.0.2",
+  "description": "Sticky sidebar library with smooth scrolling and responsive support.",
+  "homepage": "https://github.com/code-hemu/stickygum#readme",
+  "bugs": {
+    "url": "https://github.com/code-hemu/stickygum/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/code-hemu/stickygum.git"
+  },
+  "license": "GPL-3.0",
+  "author": "Hemanta Gayen",
+  "type": "module",
+  "main": "dist/stickygum.cjs",
+  "module": "dist/stickygum.esm.js",
+  "browser": "dist/stickygum.min.js",
+  "unpkg": "dist/stickygum.min.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/stickygum.esm.js",
+      "require": "./dist/stickygum.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "lint": "eslint src/",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "eslint": "^8.57.0",
+    "rollup": "^4.12.0",
+    "rollup-plugin-dts": "^6.1.1",
+    "rollup-plugin-esbuild": "^6.1.1",
+    "typescript": "^5.4.0"
+  }
+}
+
