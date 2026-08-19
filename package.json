@@ -34,6 +34,7 @@
     "dev": "rollup -c -w",
     "lint": "eslint src/",
     "typecheck": "tsc --noEmit",
+    "playground": "node playground/serve.mjs",
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {

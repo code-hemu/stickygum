@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="../../resources/favicon.ico" />
+  <title>StickyGum - 4 Columns</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, -apple-system, sans-serif; color: #444; line-height: 1.7; background: #fff; }
+
+    .header { background: #a4337b; color: #fff; padding: 1.25rem 2rem; }
+    .header h1 { font-size: 1.2rem; font-weight: 700; }
+    .header p { color: rgba(255,255,255,.85); font-size: .85rem; }
+
+    .wrapper { max-width: 1200px; margin: 0 auto; padding: 0 1.25rem; }
+    .innerWrapper { margin: 0 -15px; overflow: hidden; }
+    .innerWrapper::after { content: ""; display: table; clear: both; }
+
+    .column { position: relative; width: 25%; padding: 0 15px; float: left; }
+    .stickySidebar { will-change: transform; }
+
+    .box {
+      background: #f4f4f8;
+      border: 1px solid #e0e0e8;
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    .box h2 { font-size: 1.05rem; color: #1a1a2e; margin-bottom: .6rem; }
+    .box p { font-size: .92rem; margin-bottom: .9rem; }
+    .box p:last-child { margin-bottom: 0; }
+
+    .image {
+      border-radius: 10px;
+      background: linear-gradient(135deg, #a4337b, #cf3b99);
+      margin-bottom: 1rem;
+      position: relative;
+    }
+    .image::after {
+      content: "image";
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,.7);
+      font-size: .8rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .footer { clear: both; background: #f4f4f8; }
+
+    @media (max-width: 1024px) {
+      .column { width: 50%; }
+    }
+    @media (max-width: 640px) {
+      .column { width: 100%; float: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>StickyGum - 4 columns example</h1>
+    <p>All four columns are sticky, each scrolling independently within the shared container.</p>
+  </div>
+
+  <div class="wrapper">
+    <div class="innerWrapper" id="wrapperFourColumns">
+      <div class="column">
+        <div class="stickySidebar">
+          <div class="box">
+            <h2>Column 1</h2>
+            <p>Gloriatur neglegentur ea mel. Eu pro option moderatius, elitr nonumy molestiae ad nam. Quis labore eos ut, his ad sale officiis efficiendi. Usu ex petentium theophrastus, an his prima atqui. Eu quando vituperata vel.</p>
+            <p><div class="image" style="height: 600px;"></div></p>
+            <p>Est te nonumes verterem urbanitas, ei quo utinam constituto. Nihil tation vis ad, corrumpit incorrupte mea cu. Mei te apeirian intellegat, wisi meliore interpretaris et usu.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="stickySidebar">
+          <div class="box">
+            <h2>Column 2</h2>
+            <p>Decore aliquando has in, mel exerci inermis an. Phaedrum consequat cum ex, harum legere ad qui. Ea quo movet omnium, graecis vituperatoribus sed te. Cu est omnis deseruisse referrentur.</p>
+            <p><div class="image" style="height: 900px;"></div></p>
+            <p>Lorem ipsum dolor sit amet, ei vix dicit possim. Pro principes urbanitas ei, his no omittam inimicus, qui apeirian honestatis philosophia ei. Augue quaerendum scriptorem vix ad, duo in mucius facilisis.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="stickySidebar">
+          <div class="box">
+            <h2>Column 3</h2>
+            <p>Has te iudico gloriatur. Vix et tritani interesset. Te paulo perpetua his, eu accusata evertitur philosophia vix, ei minimum inimicus has. Pro an hinc constituto disputando, luptatum laboramus eu quo, ad fugit saepe lobortis sea.</p>
+            <p><div class="image" style="height: 300px;"></div></p>
+            <p>Est te nonumes verterem urbanitas, ei quo utinam constituto. Nihil tation vis ad, corrumpit incorrupte mea cu. Mei te apeirian intellegat, id graece probatus contentiones nam, natum legimus an quo.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="stickySidebar">
+          <div class="box">
+            <h2>Column 4</h2>
+            <p>Vim ea euripidis intellegebat, accumsan adolescens quaerendum qui ut, ei unum viris vim. Mei eu mazim omittam, sint oblique recteque id eum.</p>
+            <p><div class="image" style="height: 100px;"></div></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="image" style="height: 200px; border-radius: 0;"></div>
+  </div>
+
+  <script src="../../dist/stickygum.min.js"></script>
+  <script>
+    new StickyGum({
+      sidebar: ".column",
+      container: "#wrapperFourColumns",
+      offsetTop: 30,
+      minWidth: 1024
+    });
+  </script>
+</body>
+</html>
