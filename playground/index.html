@@ -2,307 +2,181 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>StickyGum – a sticky sidebar library for the web</title>
-  <meta name="description" content="StickyGum is an embeddable sticky sidebar library for the browser">
-  <link rel="icon" type="image/png" href="../resources/logo.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;700&family=Source+Code+Pro&display=swap"
-        rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StickyGum</title>
+  <link rel="icon" type="image/png" href="../resources/favicon.ico" />
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
+    :root {
+      --brand: #f83cb5;
+      --brand-dark: #f83cb5;
+      --text: #1a1a2e;
+      --muted: #666;
+      --border: #e0e0e8;
+      --code-bg: #a4337b;
+      --code-fg: #f4f4f8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      min-height: 100vh;
-      background: #F6F8F8;
-      font-family: 'Nunito', system-ui, -apple-system, sans-serif;
+      font-family: system-ui, -apple-system, sans-serif;
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
     }
+    a { color: var(--text); }
 
-    a { color: darkslateblue; text-decoration: none; }
-    a:hover { opacity: 0.8; }
+    .container { max-width: 1000px; margin: 0 auto; padding: 0rem 1.25rem 4rem; }
+    hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+    h2 { font-size: 1.5rem; margin: 0 0 1rem; padding-top: 1rem; }
+    h2::before { content: "⬡ "; color: var(--brand); }
+    h3 { font-size: 1.05rem; margin: 1.5rem 0 .5rem; }
+    p { color: #444; margin-bottom: 1rem; }
+    code { background: #ffeefa; padding: 1px 5px; border-radius: 3px; font-size: .86em; }
 
-    h1 {
-      font-weight: 200;
-      font-size: 26px;
-      text-align: center;
-      margin-bottom: 10px;
-    }
-
-    h2 { font-weight: 500; font-size: 22px; margin-bottom: 20px; }
-
-    main {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    section, footer {
-      max-width: 800px;
-      margin: 50px auto;
-      padding: 20px;
-    }
-
-    .logo {
-      display: block;
-      margin: 40px auto 26px;
-      width: 150px;
-      height: auto;
-    }
-
-    .github-link { text-align: center; margin: 26px 0 40px; }
-
-    .github-button {
-      display: inline-block;
-      background: #272936;
-      color: #F6F8F8;
-      padding: 8px 22px;
-      border-radius: 20px;
-      font-size: 15px;
-      font-weight: 700;
-      letter-spacing: .3px;
-    }
-
-    .demo { max-width: 780px; margin: 0 auto; }
-
-    .editor {
-      border-radius: 6px;
-      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-      font-family: 'Source Code Pro', ui-monospace, monospace;
-      font-size: 14px;
-      line-height: 20px;
-      background: #282c34;
-      overflow: hidden;
-    }
-    .editor iframe { display: block; width: 100%; border: 0; background: #fff; }
-
-    .controls {
+    .topbar {
+      padding: 1.1rem 1.25rem;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin: 10px 2px 0;
-      font-size: 14px;
+      justify-content: center;
+      gap: 1rem;
     }
-    .controls code { font-family: 'Source Code Pro', ui-monospace, monospace; font-size: 13px; }
-    .controls .scroll-it {
-      border: none;
-      background: none;
-      color: darkslateblue;
-      font: inherit;
-      font-size: 14px;
-      cursor: pointer;
-      padding: 0;
-      border-bottom: 1px dashed darkslateblue;
+    .topbar a { color: #0e0d0d; text-decoration: none; }
+    .topbar h1 { font-size: 5rem; font-weight: 700; display: flex; align-items: center; gap: .6rem; }
+    .topbar h1 img { height: 77px; width: auto; filter: drop-shadow(0 2px 4px #ee299c); }
+    .topbar .github {
+      background: rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,.4);
+      border-radius: 50px;
+      padding: .45em 1.05em;
+      font-size: .85rem;
+      font-weight: 600;
+      white-space: nowrap;
     }
-    .controls .scroll-it:hover { opacity: 0.8; }
-    .controls .scroll-it:disabled { color: #9aa; border-bottom-color: #9aa; cursor: default; }
+    .topbar .github:hover { background: rgba(255,255,255,.26); }
 
-    .getting-started { text-align: center; }
-    .getting-started .more { margin-top: 35px; }
-    .getting-started .more > span {
-      display: inline-block;
-      width: 30px;
-      height: 6px;
-      border-radius: 6px;
-      background-color: rgb(219, 219, 219);
-      transform: rotate(15deg) translateX(4px);
-      transition: transform 300ms ease-in-out;
-    }
-    .getting-started .more > span:nth-child(2) { transform: rotate(-15deg) translateX(-4px); }
-    .getting-started .more.on > span { transform: rotate(0deg) translateX(4px); }
-    .getting-started .more.on > span:nth-child(2) { transform: rotate(0deg) translateX(-4px); }
+    .lead { font-size: 1.05rem; color: #333; margin-top: 1.5rem; }
 
-    .btn {
-      display: inline-block;
-      text-decoration: none;
-      font-size: 18px;
-      border: none;
-      letter-spacing: 1.5px;
+    .toc {
+      margin: 1.5rem 0 2.5rem;
+      padding: 1.25rem 1.25rem 1.25rem 2.5rem;
+      background: #f4f4f8;
       border-radius: 12px;
-      color: #fff;
-      position: relative;
-      cursor: pointer;
-      box-shadow: 0 5px 8px rgba(0, 0, 0, 0.4);
+      list-style: decimal;
     }
-    .btn:focus { outline: none; }
-    .btn:active { transform: translateY(2px); }
+    .toc li { margin: .22rem 0; }
+    .toc a:hover { text-decoration: none; }
 
-    .btn-shine {
-      padding: 15px 75px;
-      background-image: linear-gradient(to left, #272936, #a147b1);
-      overflow: hidden;
-    }
-    .btn-shine span { z-index: 20; position: relative; }
-    .btn-shine::after {
-      background: #fff;
-      content: "";
-      height: 155px;
-      top: -50px;
-      left: -75px;
-      opacity: .3;
-      position: absolute;
-      transform: rotate(35deg);
-      transition: all 650ms cubic-bezier(0.19, 1, 0.22, 1);
-      width: 50px;
-      z-index: 0;
-    }
-    .btn-shine:hover::after {
-      left: 120%;
-      transition: all 650ms cubic-bezier(0.19, 1, 0.22, 1);
-    }
-
-    .grid {
-      display: grid;
-      align-items: flex-start;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    }
-    .feature { margin: 20px 10px; }
-
-    .split-editor {
-      display: flex;
-      border-radius: 6px;
-      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-      font-family: 'Source Code Pro', ui-monospace, monospace;
-      font-size: 14px;
-      line-height: 20px;
-      overflow: hidden;
-    }
-    .split-editor .code {
-      width: 50%;
-      height: 340px;
-      overflow: auto;
-      padding: 12px;
-      background: #282c34;
-      color: #abb2bf;
-      border-right: 1px solid #3a3f4b;
-      white-space: pre;
-      font: inherit;
-    }
-    .split-editor .preview {
-      width: 50%;
-      height: 340px;
-      overflow: auto;
-      padding: 12px;
-      background: #fbfbfd;
-      border: 0;
-      font: inherit;
+    pre {
+      background: #f6f3f4;
       color: #444;
+      padding: 1.1rem 1.25rem;
+      border-radius: 10px;
+      overflow-x: auto;
+      font-size: .83rem;
+      line-height: 1.65;
+      tab-size: 2;
+      margin: .75rem 0 1.25rem;
     }
-    .note { font-size: 14px; color: #555; margin-bottom: 14px; }
-    .note code { font-family: 'Source Code Pro', ui-monospace, monospace; font-size: 13px; background: #ebedef; padding: 1px 5px; border-radius: 3px; }
+    pre code { background: none; color: inherit; padding: 0; }
 
-    table { width: 100%; border-collapse: collapse; font-size: 14px; background: #fff; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,.12); }
-    th, td { padding: 10px 14px; text-align: left; vertical-align: top; }
-    th { background: #eef0f2; font-weight: 700; }
-    td { border-top: 1px solid #ececec; }
-    td code, th code { font-family: 'Source Code Pro', ui-monospace, monospace; font-size: 13px; }
+    .box-demo { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin: .75rem 0 1rem; }
+    .box-demo__header {
+      background: #eaeaef;
+      color: #444;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: .5rem .9rem;
+    }
+    .box-demo__inner iframe { display: block; width: 100%; border: 0; }
+    .box-demo-button-wrapper { margin: .5rem 0 0; }
+    .box-demo-button-wrapper button,
+    .open-example {
+      border: none;
+      background: var(--brand);
+      color: #fff;
+      font: inherit;
+      font-size: .85rem;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+      padding: .6em 1.4em;
+      transition: background .25s;
+    }
+    .box-demo-button-wrapper button:hover { background: var(--brand-dark); }
+    .box-demo-button-wrapper button:disabled { cursor: default; background: #877ce9; }
+    .open-example { 
+      padding: .7em 1.4em;
+      margin-left: 10px;
+      text-decoration: none;
+    } 
+    table { width: 100%; border-collapse: collapse; font-size: .85rem; margin: 1rem 0 1.5rem; }
+    thead { background: #eaeaef; }
+    th, td { padding: .55rem .7rem; text-align: left; vertical-align: top; }
+    th { font-size: .73rem; text-transform: uppercase; letter-spacing: .04em; color: #444; }
+    td { border-top: 1px solid var(--border); }
+    tbody tr:nth-child(even) { background: #f5f5f9; }
 
-    footer { text-align: center; font-size: 14px; color: #777; }
-
-    @media only screen and (max-width: 640px) {
-      .split-editor { flex-direction: column; }
-      .split-editor .code, .split-editor .preview { width: auto; border-right: none; border-bottom: 1px solid #3a3f4b; }
+    footer { text-align: center; color: var(--muted); font-size: .83rem; margin-top: 3rem; }
+    @media (max-width: 790px) {
+      .topbar h1 img { height: 24px;}
+      .topbar h1 {font-size: 2rem;}
     }
   </style>
 </head>
 <body>
-  <main>
-    <img class="logo" src="../resources/logo.png" alt="StickyGum logo" />
-    <h1>StickyGum – an embeddable sticky sidebar library for the web</h1>
-    <div class="github-link">
-      <a class="github-button" href="https://github.com/code-hemu/stickygum">View on GitHub</a>
-    </div>
+  <header class="topbar">
+    <h1>
+      <a href="https://github.com/code-hemu/stickygum">
+        <img src="../resources/stickygum_logo.png" alt="StickyGum logo" />
+        StickyGum.js
+      </a>
+    </h1>
+    <a class="github" href="https://github.com/code-hemu/stickygum">GitHub →</a>
+  </header>
 
-    <div class="demo">
-      <div class="demo-item">
-        <div class="editor"><iframe src="./examples/3-columns.html" height="460" loading="lazy"></iframe></div>
-        <div class="controls">
-          <div>columns: <b>3</b></div>
-          <div><button class="scroll-it" disabled>Scroll It!</button></div>
-        </div>
-      </div>
-      <div class="demo-item" style="margin-top: 34px;">
-        <div class="editor"><iframe src="./examples/4-columns.html" height="460" loading="lazy"></iframe></div>
-        <div class="controls">
-          <div>columns: <b>4</b></div>
-          <div><button class="scroll-it" disabled>Scroll It!</button></div>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <section class="getting-started">
-    <a href="#usage" class="btn btn-shine"><span>Getting Started</span></a>
-    <div class="more"><span></span><span></span></div>
-  </section>
-
-  <section class="grid">
-    <div class="feature">
-      <h2>Smooth</h2>
-      <p>Super smooth positioning without scroll lag or jank. Works whether the sidebar is shorter or taller than the viewport.</p>
-    </div>
-    <div class="feature">
-      <h2>Multiple sidebars</h2>
-      <p>Stick any number of sidebars at once — 3 columns, 4 columns, or your whole page layout. <a href="#demo">Scroll the demos above</a>.</p>
-    </div>
-    <div class="feature">
-      <h2>Responsive</h2>
-      <p>Automatically disables sticky behavior when the layout stacks, with <code>minWidth</code> and <code>disableOnResponsiveLayouts</code>.</p>
-    </div>
-  </section>
-
-  <section id="usage">
-    <h2>Getting Started</h2>
-    <p class="note">Your sidebar should live inside the container that defines its scrolling boundary. Then pass an element or selector — or an array for multiple sidebars.</p>
-    <div class="split-editor" id="usage-split">
-      <pre class="code" id="usage-html">&lt;div id="main-content"&gt;
-  &lt;aside id="sidebar"&gt;
-    &lt;!-- Sidebar content --&gt;
-  &lt;/aside&gt;
-  &lt;div id="content"&gt;
-    &lt;!-- Main content --&gt;
-  &lt;/div&gt;
-&lt;/div&gt;</pre>
-      <pre class="code" id="usage-js">import StickyGum from "stickygum";
-
-new StickyGum({
-  container: "#main-content",
-  sidebar: "#sidebar",
-  offsetTop: 30,
-  offsetBottom: 30
-});</pre>
-    </div>
-    <p class="note" style="margin-top: 14px;">
-      Once the container reaches its bottom edge, StickyGum stops the sidebar there instead of letting it scroll beyond the container.
-      Call <code>unbind()</code> to remove all listeners and restore the sidebar.
+  <div class="container">
+    <p class="lead">
+      <strong>StickyGum</strong> is a JavaScript library for creating sticky sidebars. It keeps your sidebar visible while scrolling,
+      stops it at the edges of its container, supports multiple sticky behaviors, and adapts to responsive layouts automatically.
+      Works out of the box in modern browsers. Source can be found on
+      <a href="https://github.com/code-hemu/stickygum">GitHub</a>.
     </p>
-  </section>
 
-  <section id="options">
-    <h2>Options</h2>
-    <table>
-      <thead>
-        <tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr>
-      </thead>
-      <tbody>
-        <tr><td><code>sidebar</code></td><td><code>string | Element | Element[]</code></td><td>—</td><td>Sidebar element(s) to make sticky.</td></tr>
-        <tr><td><code>container</code></td><td><code>string | Element</code></td><td>Sidebar parent</td><td>Container that limits the sticky area.</td></tr>
-        <tr><td><code>offsetTop</code></td><td><code>number</code></td><td><code>0</code></td><td>Space between the top of the viewport and the sidebar.</td></tr>
-        <tr><td><code>offsetBottom</code></td><td><code>number</code></td><td><code>0</code></td><td>Space between the bottom of the viewport and the sidebar.</td></tr>
-        <tr><td><code>updateSidebarHeight</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Updates sidebar height dynamically while scrolling.</td></tr>
-        <tr><td><code>minWidth</code></td><td><code>number</code></td><td><code>0</code></td><td>Disables StickyGum below this viewport width.</td></tr>
-        <tr><td><code>disableOnResponsiveLayouts</code></td><td><code>boolean</code></td><td><code>true</code></td><td>Disables sticky behavior when the layout becomes stacked.</td></tr>
-        <tr><td><code>sidebarBehavior</code></td><td><code>"modern" | "stick-to-top" | "stick-to-bottom"</code></td><td><code>"modern"</code></td><td>Controls how the sidebar behaves while scrolling.</td></tr>
-        <tr><td><code>defaultPosition</code></td><td><code>string</code></td><td><code>"relative"</code></td><td>Initial CSS position before StickyGum starts.</td></tr>
-        <tr><td><code>verbose</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Logs helpful warnings during initialization.</td></tr>
-      </tbody>
-    </table>
-  </section>
+    <p>Click the <em>Scroll It!</em> button to scroll each demo up and down. You can also open the demo in a new tab.</p>
+    <div class="box-demo-button-wrapper"><button class="scroll-it" disabled>Scroll It!</button><a class="open-example" href="./examples/3-columns.html" target="_blank">Open 3 Columns Example</a></div>
+    <div class="box-demo">
+      <div class="box-demo__header">3 Columns - left, content and right all sticky</div>
+      <div class="box-demo__inner"><iframe src="./examples/3-columns.html" height="480" loading="lazy"></iframe></div>
+    </div>
+    <br/>
+    <p>StickyGum supports multiple sidebars at once. This layout makes the left column, the middle content column and the right column all sticky, just pass an array of elements.</p>
+        <pre><code>new StickyGum({
+  sidebar: [".leftSidebar", ".content", ".rightSidebar"],
+  container: "#wrapperThreeColumns",
+  offsetTop: 30
+});</code></pre>
 
-  <footer>
-    StickyGum · GPL-3.0 · © Hemanta Gayen ·
-    <a href="https://github.com/code-hemu/stickygum">GitHub</a>
-  </footer>
+    <div class="box-demo-button-wrapper"><button class="scroll-it" disabled>Scroll It!</button><a class="open-example" href="./examples/4-columns.html" target="_blank">Open 4 Columns Example</a></div>
+    <div class="box-demo">
+      <div class="box-demo__header">4 Columns - all four columns sticky</div>
+      <div class="box-demo__inner"><iframe src="./examples/4-columns.html" height="480" loading="lazy"></iframe></div>
+    </div>
+    <br/>
+    <p>StickyGum can handle even more sidebars at once - all four columns here are sticky and scroll independently within the shared container.</p>
+    <pre><code>new StickyGum({
+  sidebar: ".column",
+  container: "#wrapperFourColumns",
+  offsetTop: 30,
+  minWidth: 1024
+});</code></pre>
+  
+    <footer>
+      StickyGum is licensed under GPL-3.0. © 
+      <a href="https://www.codehemu.in">CodeHemu</a>
+    </footer>
+  </div>
 
   <script type="module" src="./index.js"></script>
 </body>

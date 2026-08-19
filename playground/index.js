@@ -32,7 +32,8 @@ async function scrollIt(win) {
 }
 
 function bindScrollIt(button) {
-  const iframe = button.closest(".demo-item")?.querySelector(".editor iframe");
+  const box = button.parentElement.nextElementSibling;
+  const iframe = box?.querySelector(".box-demo__inner iframe");
 
   if (iframe) {
     iframe.addEventListener("load", () => {
@@ -49,10 +50,3 @@ function bindScrollIt(button) {
 }
 
 document.querySelectorAll(".scroll-it").forEach(bindScrollIt);
-
-const more = document.querySelector(".getting-started .more");
-if (more) {
-  document.addEventListener("scroll", () => {
-    more.classList.toggle("on", window.scrollY > 100);
-  }, { passive: true });
-}
