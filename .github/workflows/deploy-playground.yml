@@ -1,4 +1,4 @@
-name: Deploy Playground
+name: Deploy Playground to GitHub Pages
 
 on:
   push:
@@ -6,9 +6,13 @@ on:
       - main
     paths:
       - "playground/**"
-      - "src/**"
       - "resources/**"
+      - "src/**"
       - "rollup.config.js"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/deploy-playground.yml"
+
   workflow_dispatch:
 
 permissions:
@@ -17,21 +21,18 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages-playground
+  group: pages
   cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -43,22 +44,34 @@ jobs:
       - name: Build library
         run: npm run build
 
-      - name: Stage playground site
-        run: |
-          mkdir -p deploy/examples deploy/resources deploy/dist
-          cp playground/index.html playground/index.js deploy/
-          cp playground/examples/*.html deploy/examples/
-          cp resources/* deploy/resources/
-          cp dist/stickygum.min.js dist/stickygum.js deploy/dist/
+      - name: Build playground
+        run: npx webpack --config playground/webpack.config.js --mode production
 
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
+      - name: Assemble static site
+        run: |
+          mkdir -p _site/examples _site/resources _site/dist
+          cp -r playground/dist/. _site/
+          cp -r playground/examples/. _site/examples/
+          cp -r resources/. _site/resources/
+          cp dist/stickygum.min.js _site/dist/
+
+      - name: Skip Jekyll processing
+        run: touch _site/.nojekyll
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./deploy
+          path: _site
 
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
