@@ -34,7 +34,7 @@
     }
     .topbar a { color: #0e0d0d; text-decoration: none; }
     .topbar h1 { font-size: 5rem; font-weight: 700; display: flex; align-items: center; gap: .6rem; }
-    .topbar h1 img { height: 77px; width: auto; filter: drop-shadow(0 2px 4px #ee299c); }
+    .topbar h1 img { height: 150px; width: auto; filter: drop-shadow(0 2px 4px #ee299c); }
     .topbar .github {
       background: rgba(255,255,255,.14);
       border: 1px solid rgba(255,255,255,.4);
