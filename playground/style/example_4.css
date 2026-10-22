@@ -10,7 +10,7 @@
     .innerWrapper::after { content: ""; display: table; clear: both; }
 
     .column { position: relative; width: 25%; padding: 0 15px; float: left; }
-    .stickySidebar { will-change: transform; }
+    .stickGum { will-change: transform; }
 
     .box {
       background: #f4f4f8;
