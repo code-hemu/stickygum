@@ -12,7 +12,7 @@ export class Scroll {
   handle(): void {
     const o = this.state;
 
-    if (!isVisible(o.stickySidebar)) return;
+    if (!isVisible(o.stickGum)) return;
 
     if (document.body.getBoundingClientRect().width < o.options.minWidth) {
       Sidebar.reset(o);
@@ -28,7 +28,7 @@ export class Scroll {
     const result = Position.calculate(
       o.sidebar,
       o.container,
-      o.stickySidebar,
+      o.stickGum,
       o.options,
       o.paddingTop,
       o.paddingBottom,
