@@ -2,7 +2,7 @@
   "name": "stickygum",
   "version": "0.0.2",
   "description": "Sticky sidebar library with smooth scrolling and responsive support.",
-  "homepage": "https://github.com/code-hemu/stickygum#readme",
+  "homepage": "https://code-hemu.github.io/stickygum/",
   "bugs": {
     "url": "https://github.com/code-hemu/stickygum/issues"
   },
@@ -13,16 +13,16 @@
   "license": "GPL-3.0",
   "author": "Hemanta Gayen",
   "type": "module",
-  "main": "dist/stickygum.cjs",
+  "main": "dist/stickygum.cjs.js",
   "module": "dist/stickygum.esm.js",
   "browser": "dist/stickygum.min.js",
   "unpkg": "dist/stickygum.min.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/stickygum.esm.js",
-      "require": "./dist/stickygum.cjs",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/stickygum.cjs.js"
     }
   },
   "files": [
@@ -30,26 +30,18 @@
     "src"
   ],
   "scripts": {
-    "build": "rollup -c",
-    "dev": "rollup -c -w",
-    "lint": "eslint src/",
+    "clean": "guchho clean",
+    "dev": "cd playground && guchho dev --open",
+    "build": "guchho build",
+    "playground:build": "cd playground && guchho build",
     "typecheck": "tsc --noEmit",
-    "playground": "webpack serve --config playground/webpack.config.js",
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "^15.2.3",
-    "@typescript-eslint/eslint-plugin": "^7.0.0",
-    "@typescript-eslint/parser": "^7.0.0",
-    "eslint": "^8.57.0",
-    "html-webpack-plugin": "^5.6.0",
-    "rollup": "^4.12.0",
-    "rollup-plugin-dts": "^6.1.1",
-    "rollup-plugin-esbuild": "^6.1.1",
-    "typescript": "^5.4.0",
-    "webpack": "^5.91.0",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.0.4"
+    "@guchho/banner": "^0.1.4",
+    "@guchho/dts": "^0.2.0",
+    "@typescript/typescript6": "^6.0.2",
+    "guchho": "^1.0.8",
+    "typescript": "^7.0.2"
   }
 }
-
