@@ -6,9 +6,8 @@ on:
       - main
     paths:
       - "playground/**"
-      - "resources/**"
       - "src/**"
-      - "rollup.config.js"
+      - "resources/**"
       - "package.json"
       - "package-lock.json"
       - ".github/workflows/deploy-playground.yml"
@@ -41,27 +40,25 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build library
-        run: npm run build
-
       - name: Build playground
-        run: npx webpack --config playground/webpack.config.js --mode production
+        run: npx guchho build
+        working-directory: playground
 
-      - name: Assemble static site
+      - name: Verify build output
         run: |
-          mkdir -p _site/examples _site/resources _site/dist
-          cp -r playground/dist/. _site/
-          cp -r playground/examples/. _site/examples/
-          cp -r resources/. _site/resources/
-          cp dist/stickygum.min.js _site/dist/
+          if [ ! -d "playground/dist" ]; then
+            echo "Guchho build did not create playground/dist" >&2
+            ls -la playground
+            exit 1
+          fi
 
       - name: Skip Jekyll processing
-        run: touch _site/.nojekyll
+        run: touch playground/dist/.nojekyll
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: _site
+          path: playground/dist
 
   deploy:
     needs: build
