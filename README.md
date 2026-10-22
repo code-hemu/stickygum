@@ -1,7 +1,7 @@
 <p align="center">
   <a href="https://github.com/code-hemu/stickygum">
     <picture>
-      <img src="https://raw.githubusercontent.com/code-hemu/stickygum/refs/heads/main/resources/logo.png" alt="stickygum logo" width="312px" />
+      <img src="https://raw.githubusercontent.com/code-hemu/stickygum/refs/heads/main/resources/logo.png" alt="stickygum logo" width="500px" />
     </picture>
   </a>
 </p>
