@@ -10,10 +10,10 @@ export interface LayoutDimensions {
 }
 
 export class Layout {
-  static measure(sidebar: HTMLElement, container: HTMLElement, stickySidebar: HTMLElement): LayoutDimensions {
+  static measure(sidebar: HTMLElement, container: HTMLElement, stickGum: HTMLElement): LayoutDimensions {
     const sidebarRect = sidebar.getBoundingClientRect();
     const containerRect = container.getBoundingClientRect();
-    const stickyRect = stickySidebar.getBoundingClientRect();
+    const stickyRect = stickGum.getBoundingClientRect();
 
     return {
       sidebarOffset: {
@@ -28,10 +28,10 @@ export class Layout {
     };
   }
 
-  static updateSidebarMinHeight(sidebar: HTMLElement, stickySidebar: HTMLElement, paddingBottom: number): void {
-    const offsetTop = stickySidebar.getBoundingClientRect().top + window.scrollY;
+  static updateSidebarMinHeight(sidebar: HTMLElement, stickGum: HTMLElement, paddingBottom: number): void {
+    const offsetTop = stickGum.getBoundingClientRect().top + window.scrollY;
     const sidebarOffsetTop = sidebar.getBoundingClientRect().top + window.scrollY;
-    sidebar.style.minHeight = `${stickySidebar.offsetHeight + offsetTop - sidebarOffsetTop + paddingBottom}px`;
+    sidebar.style.minHeight = `${stickGum.offsetHeight + offsetTop - sidebarOffsetTop + paddingBottom}px`;
   }
 
   static resetSidebarMinHeight(sidebar: HTMLElement): void {
