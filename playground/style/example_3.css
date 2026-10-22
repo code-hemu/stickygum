@@ -13,7 +13,7 @@
     .content { width: 50%; float: left; }
     .rightSidebar { width: 25%; float: right; padding: 0 0 0 30px; }
 
-    .stickySidebar { will-change: transform; }
+    .stickGum { will-change: transform; }
 
     .box {
       background: #f4f4f8;
