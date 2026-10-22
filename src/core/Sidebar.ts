@@ -2,7 +2,7 @@ import type { Options } from '../defaults.js';
 import { getOffset } from '../utils/dom.js';
 import { setStyles } from '../utils/css.js';
 import { removeScriptTags } from '../utils/helpers.js';
-import { SidebarResizeObserver } from '../observers/ResizeObserver.js';
+import type { SidebarResizeObserver } from '../observers/ResizeObserver.js';
 import type { PositionResult } from './Position.js';
 import { Layout } from './Layout.js';
 export interface SidebarState {
