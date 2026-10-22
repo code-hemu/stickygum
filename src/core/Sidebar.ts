@@ -7,14 +7,14 @@ import type { PositionResult } from './Position.js';
 import { Layout } from './Layout.js';
 export interface SidebarState {
   sidebar: HTMLElement;
-  stickySidebar: HTMLElement;
+  stickGum: HTMLElement;
   container: HTMLElement;
   options: Options;
   onScroll: () => void;
   previousScrollTop: number;
   fixedScrollTop: number;
-  stickySidebarPaddingTop: number;
-  stickySidebarPaddingBottom: number;
+  stickGumPaddingTop: number;
+  stickGumPaddingBottom: number;
   marginBottom: number;
   paddingTop: number;
   paddingBottom: number;
@@ -38,15 +38,15 @@ export class Sidebar {
       boxSizing: 'border-box',
     });
 
-    state.stickySidebar = state.sidebar.querySelector<HTMLElement>('.stickySidebar')!;
-    if (!state.stickySidebar) {
+    state.stickGum = state.sidebar.querySelector<HTMLElement>('.stickGum')!;
+    if (!state.stickGum) {
       removeScriptTags(state.sidebar);
-      state.stickySidebar = document.createElement('div');
-      state.stickySidebar.classList.add('stickySidebar');
-      state.stickySidebar.append(...state.sidebar.children);
-      state.sidebar.append(state.stickySidebar);
+      state.stickGum = document.createElement('div');
+      state.stickGum.classList.add('stickGum');
+      state.stickGum.append(...state.sidebar.children);
+      state.sidebar.append(state.stickGum);
     } else {
-      state.stickySidebar.classList.add('stickySidebar');
+      state.stickGum.classList.add('stickGum');
     }
 
     const computedStyle = getComputedStyle(state.sidebar);
@@ -54,19 +54,19 @@ export class Sidebar {
     state.paddingTop = parseFloat(computedStyle.paddingTop);
     state.paddingBottom = parseFloat(computedStyle.paddingBottom);
 
-    let collapsedTopHeight = getOffset(state.stickySidebar).top;
-    let collapsedBottomHeight = state.stickySidebar.offsetHeight;
-    state.stickySidebar.style.paddingTop = '1px';
-    state.stickySidebar.style.paddingBottom = '1px';
-    collapsedTopHeight -= getOffset(state.stickySidebar).top;
-    collapsedBottomHeight = state.stickySidebar.offsetHeight - collapsedBottomHeight - collapsedTopHeight;
-    state.stickySidebarPaddingTop = collapsedTopHeight === 0 ? 0 : 1;
-    state.stickySidebarPaddingBottom = collapsedBottomHeight === 0 ? 0 : 1;
+    let collapsedTopHeight = getOffset(state.stickGum).top;
+    let collapsedBottomHeight = state.stickGum.offsetHeight;
+    state.stickGum.style.paddingTop = '1px';
+    state.stickGum.style.paddingBottom = '1px';
+    collapsedTopHeight -= getOffset(state.stickGum).top;
+    collapsedBottomHeight = state.stickGum.offsetHeight - collapsedBottomHeight - collapsedTopHeight;
+    state.stickGumPaddingTop = collapsedTopHeight === 0 ? 0 : 1;
+    state.stickGumPaddingBottom = collapsedBottomHeight === 0 ? 0 : 1;
     if (collapsedTopHeight === 0) {
-      state.stickySidebar.style.paddingTop = '0px';
+      state.stickGum.style.paddingTop = '0px';
     }
     if (collapsedBottomHeight === 0) {
-      state.stickySidebar.style.paddingBottom = '0px';
+      state.stickGum.style.paddingBottom = '0px';
     }
 
     state.previousScrollTop = 0;
@@ -80,9 +80,9 @@ export class Sidebar {
     const scrollTop = window.scrollY;
 
     if (result.position === 'fixed') {
-      setStyles(state.stickySidebar, {
+      setStyles(state.stickGum, {
         position: 'fixed',
-        width: `${state.stickySidebar.getBoundingClientRect().width}px`,
+        width: `${state.stickGum.getBoundingClientRect().width}px`,
         transform: `translateY(${result.top}px)`,
         left: `${sidebarOffset.left + parseFloat(getComputedStyle(state.sidebar).paddingLeft) - window.scrollX}px`,
         top: '0px',
@@ -90,23 +90,23 @@ export class Sidebar {
     } else if (result.position === 'absolute') {
       const css: Partial<CSSStyleDeclaration> = {};
 
-      if (getComputedStyle(state.stickySidebar).position !== 'absolute') {
+      if (getComputedStyle(state.stickGum).position !== 'absolute') {
         css.position = 'absolute';
-        css.transform = `translateY(${scrollTop + result.top - sidebarOffset.top - state.stickySidebarPaddingTop - state.stickySidebarPaddingBottom}px)`;
+        css.transform = `translateY(${scrollTop + result.top - sidebarOffset.top - state.stickGumPaddingTop - state.stickGumPaddingBottom}px)`;
         css.top = '0px';
       }
 
-      css.width = `${state.stickySidebar.getBoundingClientRect().width}px`;
+      css.width = `${state.stickGum.getBoundingClientRect().width}px`;
       css.left = '';
 
-      setStyles(state.stickySidebar, css);
+      setStyles(state.stickGum, css);
     } else {
       Sidebar.reset(state);
     }
 
     if (result.position !== 'static') {
       if (state.options.updateSidebarHeight) {
-        Layout.updateSidebarMinHeight(state.sidebar, state.stickySidebar, state.paddingBottom);
+        Layout.updateSidebarMinHeight(state.sidebar, state.stickGum, state.paddingBottom);
       }
     }
 
@@ -116,7 +116,7 @@ export class Sidebar {
   static reset(state: SidebarState): void {
     state.fixedScrollTop = 0;
     Layout.resetSidebarMinHeight(state.sidebar);
-    setStyles(state.stickySidebar, {
+    setStyles(state.stickGum, {
       position: 'static',
       width: '',
       transform: 'none',
