@@ -13,7 +13,7 @@ export class Position {
   static calculate(
     sidebar: HTMLElement,
     container: HTMLElement,
-    stickySidebar: HTMLElement,
+    stickGum: HTMLElement,
     options: Options,
     paddingTop: number,
     paddingBottom: number,
@@ -35,9 +35,9 @@ export class Position {
       const windowOffsetTop = options.additionalMarginTop;
       let windowOffsetBottom: number;
 
-      const sidebarSmallerThanWindow = (stickySidebar.offsetHeight + offsetTop + offsetBottom) < window.innerHeight;
+      const sidebarSmallerThanWindow = (stickGum.offsetHeight + offsetTop + offsetBottom) < window.innerHeight;
       if (sidebarSmallerThanWindow) {
-        windowOffsetBottom = windowOffsetTop + stickySidebar.offsetHeight;
+        windowOffsetBottom = windowOffsetTop + stickGum.offsetHeight;
       } else {
         windowOffsetBottom = window.innerHeight - marginBottom - paddingBottom - options.additionalMarginBottom;
       }
@@ -45,10 +45,10 @@ export class Position {
       const staticLimitTop = containerTop - scrollTop + paddingTop;
       const staticLimitBottom = containerBottom - scrollTop - paddingBottom - marginBottom;
 
-      top = getOffset(stickySidebar).top - scrollTop;
+      top = getOffset(stickGum).top - scrollTop;
       const scrollTopDiff = previousScrollTop - scrollTop;
 
-      if (getComputedStyle(stickySidebar).position === 'fixed') {
+      if (getComputedStyle(stickGum).position === 'fixed') {
         if (options.sidebarBehavior === 'modern') {
           top += scrollTopDiff;
         }
@@ -59,23 +59,23 @@ export class Position {
       }
 
       if (options.sidebarBehavior === 'stick-to-bottom') {
-        top = windowOffsetBottom - stickySidebar.offsetHeight;
+        top = windowOffsetBottom - stickGum.offsetHeight;
       }
 
       if (scrollTopDiff > 0) {
         top = Math.min(top, windowOffsetTop);
       } else {
-        top = Math.max(top, windowOffsetBottom - stickySidebar.offsetHeight);
+        top = Math.max(top, windowOffsetBottom - stickGum.offsetHeight);
       }
 
       top = Math.max(top, staticLimitTop);
-      top = Math.min(top, staticLimitBottom - stickySidebar.offsetHeight);
+      top = Math.min(top, staticLimitBottom - stickGum.offsetHeight);
 
-      const sidebarSameHeightAsContainer = container.getBoundingClientRect().height === stickySidebar.offsetHeight;
+      const sidebarSameHeightAsContainer = container.getBoundingClientRect().height === stickGum.offsetHeight;
 
       if (!sidebarSameHeightAsContainer && top === windowOffsetTop) {
         position = 'fixed';
-      } else if (!sidebarSameHeightAsContainer && top === windowOffsetBottom - stickySidebar.offsetHeight) {
+      } else if (!sidebarSameHeightAsContainer && top === windowOffsetBottom - stickGum.offsetHeight) {
         position = 'fixed';
       } else if (scrollTop + top - sidebarOffset.top - paddingTop <= options.additionalMarginTop) {
         position = 'static';
