@@ -5,8 +5,8 @@ import { Sidebar, type SidebarState } from './core/Sidebar.js';
 import { Scroll } from './core/Scroll.js';
 import { SidebarResizeObserver } from './observers/ResizeObserver.js';
 
-const STYLESHEET_ID = 'codehemu-sticky-sidebar-stylesheet';
-const STYLESHEET_CONTENT = '.stickySidebar:after {content: ""; display: table; clear: both;}';
+const STYLESHEET_ID = 'codehemu-stick-gum-stylesheet';
+const STYLESHEET_CONTENT = '.stickGum:after {content: ""; display: table; clear: both;}';
 
 export default class StickyGum {
   private options: Options;
@@ -59,7 +59,7 @@ export default class StickyGum {
       state.onScroll();
       on(document, 'scroll', state.onScroll);
       on(window, 'resize', state.onScroll);
-      state.resizeObserver.observe(state.stickySidebar);
+      state.resizeObserver.observe(state.stickGum);
 
       this.sidebarStates.push(state);
     }
