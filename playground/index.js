@@ -50,3 +50,11 @@ function bindScrollIt(button) {
 }
 
 document.querySelectorAll(".scroll-it").forEach(bindScrollIt);
+
+// The demo pages are set on the frames from script rather than from the markup:
+// the bundler rewrites a "src" that points at another page in the project, and
+// a "data-src" is left alone. The frames are loaded after the buttons above are
+// bound, so the load listener is already in place when the page arrives.
+document.querySelectorAll("iframe[data-src]").forEach((frame) => {
+  frame.src = frame.dataset.src;
+});
